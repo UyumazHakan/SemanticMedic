@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://webprotege.stanford.edu/project/DFB2Zqt182YGpAA0OFBnop"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://webprotege.stanford.edu/project/DFB2Zqt182YGpAA0OFBnop">
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/dc/elements/1.1/creator"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">system</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">This ontology was generated from an ontology revision in WebProtege http://webprotege.stanford.edu</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Ontology about ilnesses and their symptoms.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/dc/elements/1.1/creator"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">UyumazHakan</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/dc/elements/1.1/date"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#dateTime">May 24, 2014 6:01:21 AM</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty IRI="http://protege.stanford.edu/webprotege/revision"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">8</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#AbdominalPain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Backache"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Disease"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Dizziness"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Flu"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Fıtık"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Headache"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.medicalsemantic.com#hasSymptom"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="http://www.medicalsemantic.com#SymptomBackache"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="http://www.medicalsemantic.com#hasDisease"/>
+            <Class IRI="http://www.medicalsemantic.com#Symptom:Backache"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.medicalsemantic.com#SymptomDizziness"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="http://www.medicalsemantic.com#hasDisease"/>
+            <Class IRI="http://www.medicalsemantic.com#Dizziness"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.medicalsemantic.com#SymptomHeadache"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="http://www.medicalsemantic.com#hasDisease"/>
+            <Class IRI="http://www.medicalsemantic.com#Headache"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.medicalsemantic.com#Symptom:Backache"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="http://www.medicalsemantic.com#hasDisease"/>
+            <Class IRI="http://www.medicalsemantic.com#Backache"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#AbdominalPain"/>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Backache"/>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Disease"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Dizziness"/>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Flu"/>
+        <Class IRI="http://www.medicalsemantic.com#Disease"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Flu"/>
+        <Class IRI="http://www.medicalsemantic.com#SymptomDizziness"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Flu"/>
+        <Class IRI="http://www.medicalsemantic.com#SymptomHeadache"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Fıtık"/>
+        <Class IRI="http://www.medicalsemantic.com#Disease"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Fıtık"/>
+        <Class IRI="http://www.medicalsemantic.com#SymptomBackache"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Headache"/>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="http://www.medicalsemantic.com#hasSymptom"/>
+        <Class IRI="http://www.medicalsemantic.com#Disease"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="http://www.medicalsemantic.com#hasSymptom"/>
+        <Class IRI="http://www.medicalsemantic.com#Symptom"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.medicalsemantic.com#AbdominalPain</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">AbdominalPain</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.medicalsemantic.com#Disease</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Disease</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.medicalsemantic.com#Headache</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Headache</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.medicalsemantic.com#Symptom</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Symptom</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+
