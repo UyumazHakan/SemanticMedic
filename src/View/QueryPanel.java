@@ -2,6 +2,7 @@ package View;
 
 import Controller.DiseaseAddingPanelController;
 import Controller.QueryPanelController;
+import Model.DiseaseQueryMaker;
 import Model.OntologyModel;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ public class QueryPanel extends Panel {
     public QueryPanel() {
         createButton("Query",BUTTON_X,BUTTON_Y,BUTTON_WIDTH,BUTTON_HEIGHT);
     }
-    public void addButtonListener(String name, OntologyModel model){
+    public void addButtonListener(String name, OntologyModel model, DiseaseQueryMaker queryMaker){
         JButton button= (JButton) getElements().get(name);
-        button.addActionListener(new QueryPanelController(getElements(),model));
+        button.addActionListener(new QueryPanelController(getElements(),model,queryMaker));
     }
 }

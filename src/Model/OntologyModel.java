@@ -8,9 +8,6 @@ import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLXMLOntologyFormat;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 
@@ -37,81 +34,92 @@ public class OntologyModel {
     private ShortFormProvider shortFormProvider;
 
 
-
     public OntologyModel(MainFrame frame) throws OWLOntologyCreationException {
-        this.frame=frame;
-        this.owlFile=new File("ontology.owl");
-        this.iri =IRI.create("http://www.medicalsemantic.com");
-        this.dataFactory=OWLManager.getOWLDataFactory();
-        this.manager= OWLManager.createOWLOntologyManager();
-        this.ontology=manager.loadOntologyFromOntologyDocument(owlFile);
-        this.owlReasoner=createReasoner(ontology);
+        this.frame = frame;
+        this.owlFile = new File("ontology.owl");
+        this.iri = IRI.create("http://www.medicalsemantic.com");
+        this.dataFactory = OWLManager.getOWLDataFactory();
+        this.manager = OWLManager.createOWLOntologyManager();
+        this.ontology = manager.loadOntologyFromOntologyDocument(owlFile);
+        this.owlReasoner = createReasoner(ontology);
         this.shortFormProvider = new SimpleShortFormProvider();
-        this.queryEngine=new DLQueryEngine(owlReasoner,shortFormProvider);
-        this.queryPrinter=new DLQueryPrinter(queryEngine,shortFormProvider);
-        this.queryParser=new DLQueryParser(ontology,shortFormProvider);
+        this.queryEngine = new DLQueryEngine(owlReasoner, shortFormProvider);
+        this.queryPrinter = new DLQueryPrinter(queryEngine, shortFormProvider);
+        this.queryParser = new DLQueryParser(ontology, shortFormProvider);
         refreshSymptoms();
         refreshDiseases();
 
     }
+
     private Reasoner createReasoner(OWLOntology rootOntology) {
         return new Reasoner(rootOntology);
     }
-    public void addSymptom(String symptomName){
-        OWLClass newClass=dataFactory.getOWLClass(IRI.create(iri +"#"+symptomName));
+
+    public void addSymptom(String symptomName) {
+        OWLClass newClass = dataFactory.getOWLClass(IRI.create(iri + "#" + symptomName));
         OWLDeclarationAxiom declaration = dataFactory.getOWLDeclarationAxiom(newClass);
-        OWLSubClassOfAxiom subclassOf =dataFactory.getOWLSubClassOfAxiom(newClass,queryParser.parseClassExpression("Symptom"));
+        OWLSubClassOfAxiom subclassOf = dataFactory.getOWLSubClassOfAxiom(newClass, queryParser.parseClassExpression("Symptom"));
         manager.addAxiom(ontology, declaration);
         manager.addAxiom(ontology, subclassOf);
-        for(String s:getDiseases())
-        System.out.println(s);
+        for (String s : getDiseases())
+            System.out.println(s);
         refreshSymptoms();
         //saveOntology();
     }
-    public void refreshSymptoms(){
+
+    public void refreshSymptoms() {
         frame.getSymptomListPanel().refreshList(getSymptoms());
         frame.getDiseaseAddingPanel().refreshSymptomLines(getSymptoms());
     }
-    public void refreshDiseases(){
+
+    public void refreshDiseases() {
         frame.getDiseaseListPanel().refreshList(getDiseases());
     }
-    public String[] getSymptoms(){
+
+    public String[] getSymptoms() {
         return getSubClasses("Symptom");
     }
-    public String[] getDiseases(){
+
+    public String[] getDiseases() {
         return getSubClasses("Disease");
     }
-    public String[] getSubClasses(String className){
-        Set<OWLClass> classes=queryEngine.getSubClasses(className,true);
-        String[] subClasses=new String[classes.size()];
-        int i=0;
-        for(OWLClass c:classes)
-            subClasses[i++]=shortFormProvider.getShortForm(c);
+
+    public String[] getSubClasses(String className) {
+        Set<OWLClass> classes = queryEngine.getSubClasses(className, true);
+        String[] subClasses = new String[classes.size()];
+        int i = 0;
+        for (OWLClass c : classes)
+            subClasses[i++] = shortFormProvider.getShortForm(c);
         return subClasses;
     }
-    public String[] getSuperClasses(String className){
-        Set<OWLClass> classes=queryEngine.getSuperClasses(className, true);
-        String[] superClasses =new String[classes.size()];
 
-        int i=0;
-        for(OWLClass c:classes)
-            superClasses[i++]=shortFormProvider.getShortForm(c);
+    public String[] getSuperClasses(String className) {
+        Set<OWLClass> classes = queryEngine.getSuperClasses(className, true);
+        String[] superClasses = new String[classes.size()];
+
+        int i = 0;
+        for (OWLClass c : classes)
+            superClasses[i++] = shortFormProvider.getShortForm(c);
         return superClasses;
     }
-    public Set getSuperOfExpression(OWLClassExpression expression){
+
+    public Set getSuperOfExpression(OWLClassExpression expression) {
         return owlReasoner.getSuperClasses(expression, false).getFlattened();
     }
-    public Set getSubOfExpression(OWLClassExpression expression){
+
+    public Set getSubOfExpression(OWLClassExpression expression) {
         return owlReasoner.getSubClasses(expression, false).getFlattened();
     }
-    public Set getEquivalentOfExpression(OWLClassExpression expression){
+
+    public Set getEquivalentOfExpression(OWLClassExpression expression) {
         return owlReasoner.getEquivalentClasses(expression).getEntities();
     }
-    public void saveOntology(){
+
+    public void saveOntology() {
         try {
             OutputStream os = new FileOutputStream(owlFile);
             manager.saveOntology(ontology, new OWLXMLOntologyFormat(), os);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -120,25 +128,27 @@ public class OntologyModel {
     public OWLDataFactory getDataFactory() {
         return dataFactory;
     }
-    public OWLClass getClass(String name){
-        return dataFactory.getOWLClass(IRI.create(iri+"#"+name));
+
+    public OWLClass getClass(String name) {
+        return dataFactory.getOWLClass(IRI.create(iri + "#" + name));
     }
+
     public void addDisease(String diseaseName, ArrayList<String> selectedSymptoms, ArrayList<String> notSelectedSymptoms) {
-        OWLClass newDiseaseClass=dataFactory.getOWLClass(IRI.create(iri+"#"+diseaseName));
-        OWLClassExpression generalDiseaseClass=queryParser.parseClassExpression("Disease");
-        OWLDeclarationAxiom diseaseDeclaration=dataFactory.getOWLDeclarationAxiom(newDiseaseClass);
-        OWLSubClassOfAxiom diseaseSubClassOf=dataFactory.getOWLSubClassOfAxiom(newDiseaseClass,generalDiseaseClass);
-        OWLObjectPropertyExpression hasSymptom=dataFactory.getOWLObjectProperty(IRI.create(iri+"#hasDisease"));
-        manager.addAxiom(ontology,diseaseDeclaration);
-        manager.addAxiom(ontology,diseaseSubClassOf);
-        for(String symptom:selectedSymptoms){
-            OWLClassExpression symptomExpression=queryParser.parseClassExpression(symptom);
-            OWLObjectSomeValuesFrom someValuesFrom=dataFactory.getOWLObjectSomeValuesFrom(hasSymptom,symptomExpression);
-            OWLClass hasSomeSymptom=dataFactory.getOWLClass(IRI.create(iri+"#Symptom"+symptom));
-            OWLEquivalentClassesAxiom equivalent=dataFactory.getOWLEquivalentClassesAxiom(someValuesFrom,hasSomeSymptom);
-            OWLSubClassOfAxiom subClassOfAxiom=dataFactory.getOWLSubClassOfAxiom(newDiseaseClass,hasSomeSymptom);
-            manager.addAxiom(ontology,equivalent);
-            manager.addAxiom(ontology,subClassOfAxiom);
+        OWLClass newDiseaseClass = dataFactory.getOWLClass(IRI.create(iri + "#" + diseaseName));
+        OWLClassExpression generalDiseaseClass = queryParser.parseClassExpression("Disease");
+        OWLDeclarationAxiom diseaseDeclaration = dataFactory.getOWLDeclarationAxiom(newDiseaseClass);
+        OWLSubClassOfAxiom diseaseSubClassOf = dataFactory.getOWLSubClassOfAxiom(newDiseaseClass, generalDiseaseClass);
+        OWLObjectPropertyExpression hasSymptom = dataFactory.getOWLObjectProperty(IRI.create(iri + "#hasDisease"));
+        manager.addAxiom(ontology, diseaseDeclaration);
+        manager.addAxiom(ontology, diseaseSubClassOf);
+        for (String symptom : selectedSymptoms) {
+            OWLClassExpression symptomExpression = queryParser.parseClassExpression(symptom);
+            OWLObjectSomeValuesFrom someValuesFrom = dataFactory.getOWLObjectSomeValuesFrom(hasSymptom, symptomExpression);
+            OWLClass hasSomeSymptom = dataFactory.getOWLClass(IRI.create(iri + "#Symptom" + symptom));
+            OWLEquivalentClassesAxiom equivalent = dataFactory.getOWLEquivalentClassesAxiom(someValuesFrom, hasSomeSymptom);
+            OWLSubClassOfAxiom subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(newDiseaseClass, hasSomeSymptom);
+            manager.addAxiom(ontology, equivalent);
+            manager.addAxiom(ontology, subClassOfAxiom);
         }
         saveOntology();
     }

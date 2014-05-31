@@ -14,12 +14,14 @@ import org.semanticweb.owlapi.model.OWLClass;
 public class MainController {
     private OntologyModel model;
     private MainFrame view;
+    private DiseaseQueryMaker queryMaker;
 
     public MainController(OntologyModel model, MainFrame view) {
         this.model = model;
         this.view = view;
+        queryMaker=new DiseaseQueryMaker(model);
         addSymptomAddingListeners();
-        new DiseaseQueryMaker(model).getNextPossibleSymptom();
+
     }
     private void addSymptomAddingListeners(){
         SymptomAddingPanel symptomAddingPanel=view.getSymptomAddingPanel();
@@ -27,6 +29,6 @@ public class MainController {
         DiseaseAddingPanel diseaseAddingPanel=view.getDiseaseAddingPanel();
         diseaseAddingPanel.addButtonListener("SEND", model);
         QueryPanel queryPanel=view.getQueryPanel();
-        queryPanel.addButtonListener("Query",model);
+        queryPanel.addButtonListener("Query",model,queryMaker);
     }
 }
